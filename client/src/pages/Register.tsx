@@ -36,6 +36,7 @@ function Register({ onSuccess }: RegisterProps) {
 
 	return (
 		<form className="auth-card card" onSubmit={handleSubmit}>
+        
 			<h2>Create account</h2>
 
 			<label>
