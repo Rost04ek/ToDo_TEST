@@ -26,7 +26,8 @@ function Register({ onSuccess }: RegisterProps) {
 				password,
 			})
 			onSuccess(data.token, data.user)
-		} catch (submitError) {
+		} catch (err) {
+			console.error(err)
 			setError('Could not create account with those details')
 		} finally {
 			setLoading(false)
@@ -34,23 +35,23 @@ function Register({ onSuccess }: RegisterProps) {
 	}
 
 	return (
-		<form className="auth-card" onSubmit={handleSubmit}>
-			<p className="eyebrow">Start here</p>
+		<form className="auth-card card" onSubmit={handleSubmit}>
 			<h2>Create account</h2>
 
 			<label>
 				Name
-				<input value={username} onChange={(event) => setUsername(event.target.value)} />
+				<input className="form-input" value={username} onChange={(event) => setUsername(event.target.value)} />
 			</label>
 
 			<label>
 				Email
-				<input value={email} onChange={(event) => setEmail(event.target.value)} type="email" />
+				<input className="form-input" value={email} onChange={(event) => setEmail(event.target.value)} type="email" />
 			</label>
 
 			<label>
 				Password
 				<input
+					className="form-input"
 					value={password}
 					onChange={(event) => setPassword(event.target.value)}
 					type="password"
@@ -59,7 +60,7 @@ function Register({ onSuccess }: RegisterProps) {
 
 			{error ? <p className="form-error">{error}</p> : null}
 
-			<button className="primary-button" type="submit" disabled={loading}>
+			<button className="primary-button full-width" type="submit" disabled={loading}>
 				{loading ? 'Creating...' : 'Create account'}
 			</button>
 		</form>

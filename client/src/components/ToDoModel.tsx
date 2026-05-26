@@ -1,4 +1,4 @@
-export type TodoStatus = 'Todo' | 'In Progress' | 'Done'
+export type TodoStatus = 'todo' | 'in progress' | 'done'
 
 export interface AuthUser {
 	id: number
@@ -17,6 +17,7 @@ export interface TodoItem {
 	description: string
 	status: TodoStatus
 	userId: number
+	seq?: number
 	createdAt: string
 	updatedAt: string
 }

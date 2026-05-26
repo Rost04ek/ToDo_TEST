@@ -1,28 +1,36 @@
-/* Minimalist dark theme */
+/* Notion-like light theme */
 :root {
-	--bg: #0b1220;
-	--panel: #0f1724;
-	--muted: #9aa4b2;
-	--text: #e6eef8;
-	--accent: #60a5fa;
-	--danger: #fb7185;
-	--radius: 10px;
+	--bg: #f6f7f9;
+	--page: #ffffff;
+	--muted: #6b7280;
+	--text: #0b1220;
+	--accent: #2f80ed;
+	--danger: #ef4444;
+	--surface-border: #e6e8eb;
+	--radius: 8px;
 }
 
 * { box-sizing: border-box; }
 
-body { background: linear-gradient(180deg, #071022 0%, var(--bg) 100%); color: var(--text); margin: 0; font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; }
+html, body { height: 100%; }
+body { background: var(--bg); color: var(--text); margin: 0; font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; }
 
-.app-shell { min-height: 100vh; padding-bottom: 36px; }
+.app-shell { height: 100vh; overflow: hidden; padding-bottom: 36px; }
 
 .auth-layout, .board-shell, .nav-shell { width: min(1100px, calc(100% - 32px)); margin: 0 auto; }
 
 .auth-layout { display: grid; grid-template-columns: 1fr 420px; gap: 28px; padding: 48px 0; align-items: start; }
 
-.hero-copy h1 { font-size: 2.2rem; margin: 0 0 8px; color: var(--text); }
+.auth-layout.auth-center { display:flex; justify-content:center; align-items:center; min-height: calc(100vh - 80px); padding: 40px 16px; }
+
+.auth-switcher.card { width: 420px; padding: 18px; }
+
+.hero-copy h1 { font-size: 2rem; margin: 0 0 8px; color: var(--text); }
 .hero-copy p { color: var(--muted); margin: 0 0 18px; }
 
-.auth-switcher, .auth-card, .board-panel, .todo-card, .nav-shell { background: var(--panel); border-radius: var(--radius); border: 1px solid rgba(255,255,255,0.03); }
+.auth-switcher, .auth-card, .board-panel, .todo-card { background: var(--page); border-radius: var(--radius); border: 1px solid var(--surface-border); }
+
+.nav-shell { background: transparent; display:flex; justify-content:space-between; align-items:center; padding:18px 16px; margin-bottom:20px; }
 
 .auth-card { padding: 18px; display: grid; gap: 12px; }
 
@@ -32,33 +40,68 @@ body { background: linear-gradient(180deg, #071022 0%, var(--bg) 100%); color: v
 
 .eyebrow { color: var(--muted); font-size: 0.75rem; margin:0; }
 
+/* Center headings in auth forms */
+.auth-card h2,
+.auth-card .eyebrow {
+	text-align: center;
+}
+
+/* Filter label + select group in board header */
+.filter-group { display:flex; flex-direction:column; align-items:flex-start; gap:6px; }
+.filter-label { font-size:0.88rem; text-transform:none; letter-spacing:0; color:var(--muted); }
+
+@media (max-width: 900px) {
+	.filter-group { align-items:flex-start; }
+}
+
+/* Filter container: keep layout only; border is on the dropdown itself */
+.filter-group {
+	padding: 0;
+	margin: 0;
+}
+
+.filter-group select {
+	min-width: 140px;
+	background: var(--page);
+	border: 1px solid var(--surface-border);
+	padding: 8px 10px;
+	border-radius: 8px;
+}
+
 label { display:block; color:var(--muted); font-size:0.9rem; margin-bottom:6px; }
 
-input, textarea, select { width:100%; padding:10px 12px; border-radius:8px; border:1px solid rgba(255,255,255,0.03); background:transparent; color:var(--text); }
-
-.primary-button { background: var(--accent); color: #0b1220; padding:10px 12px; border-radius:8px; border:0; cursor:pointer; }
-.ghost-button { background:transparent; border:0; color:var(--muted); cursor:pointer; }
-.danger-button { background:transparent; color:var(--danger); border:0; cursor:pointer; }
-
-.nav-shell { display:flex; justify-content:space-between; align-items:center; padding:12px 16px; margin-bottom:20px; }
+input, textarea, select { width:100%; padding:10px 12px; border-radius:8px; border:1px solid var(--surface-border); background:transparent; color:var(--text); }
 
 .board-shell { display:grid; grid-template-columns: 360px 1fr; gap:20px; padding:20px 0; }
+/* Stacked variant: panels become full-width stacked under the nav bar */
+.board-shell--stacked { grid-template-columns: 1fr; gap: 18px; padding: 20px 0; }
 .board-panel { padding:16px; }
 
 .board-panel__header, .todo-card__header, .todo-card__footer { display:flex; justify-content:space-between; align-items:center; gap:12px; }
 
-.chip { font-size:0.85rem; color:var(--muted); }
+.chip { font-size:0.85rem; color:var(--muted); background: transparent; padding: 6px 10px; border-radius: 999px; border:1px solid var(--surface-border); }
 
 .todo-list { display:grid; gap:12px; }
 
-.todo-card { padding:12px; border-radius:10px; }
+.todo-card { padding:14px; border-radius:10px; }
 .todo-card h3 { margin:4px 0 0; }
 .todo-card__description { color:var(--muted); margin:8px 0; }
 
-.status-pill { padding:6px 8px; border-radius:999px; border:1px solid rgba(255,255,255,0.03); background:transparent; }
-.status-pill--todo { color: #34d399; }
-.status-pill--in-progress { color: #60a5fa; }
-.status-pill--done { color: #94a3b8; }
+.status-pill { padding:6px 8px; border-radius:999px; border:1px solid var(--surface-border); background:transparent; color: var(--muted); }
+/* Keep status pill color neutral regardless of selected value */
+.status-pill--todo { color: inherit; border-color: var(--surface-border); }
+.status-pill--in-progress { color: inherit; border-color: var(--surface-border); }
+.status-pill--done { color: inherit; border-color: var(--surface-border); }
+
+/* Buttons: Notion-like minimal */
+.ghost-button { padding:6px 10px; border-radius:6px; border:1px solid transparent; background:transparent; color:var(--muted); cursor:pointer; }
+.ghost-button:hover { background: rgba(15, 23, 42, 0.04); color:var(--text); }
+
+.primary-button { width:100%; padding:10px 12px; border-radius:8px; border:1px solid var(--accent); background:var(--accent); color:white; font-weight:600; cursor:pointer; }
+.primary-button:hover { filter:brightness(0.98); }
+
+.danger-button { padding:8px 12px; border-radius:8px; border:1px solid rgba(239,68,68,0.12); background:var(--danger); color:white; font-weight:600; cursor:pointer; }
+.danger-button:hover { filter:brightness(0.98); }
 
 @media (max-width: 900px) {
 	.auth-layout, .board-shell { grid-template-columns: 1fr; }
@@ -81,8 +124,9 @@ select {
 input:focus,
 textarea:focus,
 select:focus {
-	outline: 2px solid rgba(124, 247, 212, 0.4);
-	border-color: transparent;
+	outline: none;
+	border-color: rgba(11,18,32,0.08);
+	box-shadow: 0 6px 18px rgba(11,18,32,0.04);
 }
 
 .primary-button,
@@ -112,6 +156,14 @@ select:focus {
 .muted-copy,
 .eyebrow {
 	color: var(--muted);
+}
+
+/* Prevent textarea from expanding horizontally beyond its container */
+textarea {
+	resize: vertical; /* allow only vertical resize */
+	max-width: 100%;
+	min-height: 90px;
+	overflow: auto;
 }
 
 .form-error {
@@ -151,7 +203,12 @@ select:focus {
 .board-panel {
 	border-radius: 24px;
 	padding: 22px;
+	display: flex;
+	flex-direction: column;
 }
+
+/* Keep the Add a task panel sized to its content (don't stretch to fill the row) */
+.board-panel--form { align-self: start; }
 
 .board-panel__header,
 .todo-card__header,
@@ -181,7 +238,19 @@ select:focus {
 
 .todo-list {
 	align-content: start;
+	/* Make the todo list scrollable inside its panel instead of growing the page */
+	overflow: auto;
+	/* Allow the list to use remaining panel height; fallback max-height for older layouts */
+	max-height: calc(100vh - 320px);
+	flex: 1 1 auto;
 }
+
+/* Hide native scrollbar visually while keeping scroll functionality */
+.todo-list {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+.todo-list::-webkit-scrollbar { display: none; width: 0; height: 0; }
 
 .todo-card {
 	border-radius: 20px;
@@ -206,17 +275,9 @@ select:focus {
 	max-width: 150px;
 }
 
-.status-pill--todo {
-	border-color: rgba(124, 247, 212, 0.25);
-}
-
-.status-pill--in-progress {
-	border-color: rgba(70, 199, 255, 0.25);
-}
-
-.status-pill--done {
-	border-color: rgba(255, 255, 255, 0.18);
-}
+.status-pill--todo { border-color: var(--surface-border); }
+.status-pill--in-progress { border-color: var(--surface-border); }
+.status-pill--done { border-color: var(--surface-border); }
 
 @media (max-width: 900px) {
 	.auth-layout,
@@ -231,4 +292,140 @@ select:focus {
 	.nav-shell {
 		border-radius: 0 0 20px 20px;
 	}
+}
+
+/* Buttons - refined styles */
+.ghost-button {
+	padding: 8px 12px;
+	border-radius: 10px;
+	border: 1px solid rgba(255,255,255,0.04);
+	background: transparent;
+	color: var(--muted);
+	font-weight: 600;
+	transition: transform 120ms ease, background 120ms ease, color 120ms ease;
+}
+.ghost-button:hover {
+	color: var(--text);
+	background: rgba(255,255,255,0.02);
+	transform: translateY(-2px);
+}
+
+.primary-button {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	padding: 10px 14px;
+	border-radius: 12px;
+	border: none;
+	cursor: pointer;
+	font-weight: 700;
+	color: #071022;
+	background: linear-gradient(90deg, rgba(96,165,250,1) 0%, rgba(59,130,246,1) 100%);
+	box-shadow: 0 8px 24px rgba(59,130,246,0.12);
+	transition: transform 140ms ease, box-shadow 140ms ease, opacity 120ms ease;
+}
+.primary-button:disabled {
+	opacity: 0.6;
+	cursor: not-allowed;
+	transform: none;
+	box-shadow: none;
+}
+.primary-button:hover:not(:disabled) {
+	transform: translateY(-2px);
+	box-shadow: 0 12px 28px rgba(59,130,246,0.16);
+}
+
+.danger-button {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	padding: 8px 12px;
+	border-radius: 10px;
+	border: none;
+	cursor: pointer;
+	font-weight: 700;
+	color: #fff;
+	background: linear-gradient(90deg, rgba(251,113,133,1) 0%, rgba(239,68,68,1) 100%);
+	box-shadow: 0 8px 18px rgba(239,68,68,0.12);
+	transition: transform 120ms ease, box-shadow 120ms ease, opacity 120ms ease;
+}
+.danger-button:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 10px 20px rgba(239,68,68,0.16);
+}
+
+.todo-card__footer button.danger-button {
+	margin-left: auto;
+}
+
+/* Make the create button span the form width */
+.todo-form .primary-button {
+	width: 100%;
+	padding: 12px 16px;
+	font-size: 1rem;
+}
+
+/* Auth form primary button refinement */
+.auth-card .primary-button {
+	width: 100%;
+	padding: 14px 16px;
+	font-size: 1rem;
+	border-radius: 12px;
+ 	box-shadow: 0 10px 30px rgba(59,130,246,0.12);
+}
+.auth-card .primary-button:disabled { opacity: 0.7; cursor: not-allowed; box-shadow: none; }
+
+.auth-card .primary-button::after { display: none; }
+
+/* Compact delete button in card footer */
+.todo-card .danger-button {
+	padding: 8px 12px;
+	border-radius: 8px;
+	font-size: 0.9rem;
+}
+
+/* Unified UI utilities */
+.card { background: var(--page); border: 1px solid var(--surface-border); border-radius: var(--radius); }
+.panel-title { margin: 0 0 6px; font-size: 1.15rem; color: var(--text); }
+.muted-text { color: var(--muted); }
+.form-input { width: 100%; padding: 10px 12px; border-radius: 8px; border: 1px solid var(--surface-border); background: transparent; color: var(--text); }
+.full-width { width: 100%; }
+.flex-right { display:flex; justify-content:flex-end; align-items:center; gap:8px; }
+
+/* Muted button variants to reduce visual prominence */
+.primary-button {
+	background: linear-gradient(90deg, rgba(96,165,250,0.12) 0%, rgba(59,130,246,0.16) 100%);
+	color: var(--text);
+	box-shadow: none;
+	border: 1px solid rgba(59,130,246,0.12);
+}
+.primary-button:hover:not(:disabled) {
+	transform: translateY(-1px);
+	box-shadow: 0 6px 18px rgba(59,130,246,0.06);
+}
+
+.danger-button {
+	background: rgba(239,68,68,0.06);
+	color: #7f1d1d;
+	box-shadow: none;
+	border: 1px solid rgba(239,68,68,0.10);
+}
+.danger-button:hover {
+	transform: translateY(-1px);
+	box-shadow: 0 6px 12px rgba(239,68,68,0.06);
+}
+
+/* Ensure top navigation bar is visible on the page */
+.nav-shell {
+	background: var(--page);
+	border: 1px solid var(--surface-border);
+	box-shadow: 0 8px 30px rgba(15,23,42,0.04);
+	border-radius: 0 0 24px 24px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 16px;
+	padding: 18px 20px;
+	margin-bottom: 20px;
+	z-index: 2;
 }

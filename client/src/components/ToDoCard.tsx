@@ -8,12 +8,13 @@ interface ToDoCardProps {
 
 function ToDoCard({ todo, onStatusChange, onDelete }: ToDoCardProps) {
 	const statusClassName = todo.status.replace(/\s+/g, '-')
+	const displayNumber = todo.seq && todo.seq > 0 ? todo.seq : todo.id
 
 	return (
-		<article className="todo-card">
+		<article className="todo-card card">
 			<div className="todo-card__header">
 				<div>
-					<p className="eyebrow">Task #{todo.id}</p>
+					<p className="eyebrow">Task #{displayNumber}</p>
 					<h3>{todo.title}</h3>
 				</div>
 
@@ -22,9 +23,9 @@ function ToDoCard({ todo, onStatusChange, onDelete }: ToDoCardProps) {
 					value={todo.status}
 					onChange={(event) => onStatusChange(todo.id, event.target.value as TodoStatus)}
 				>
-					<option value="todo">todo</option>
-					<option value="in progress">in progress</option>
-					<option value="done">done</option>
+					<option value="todo">To Do</option>
+					<option value="in progress">In Progress</option>
+					<option value="done">Done</option>
 				</select>
 			</div>
 
@@ -32,9 +33,11 @@ function ToDoCard({ todo, onStatusChange, onDelete }: ToDoCardProps) {
 
 			<div className="todo-card__footer">
 				<span>Updated {new Date(todo.updatedAt).toLocaleDateString()}</span>
-				<button className="danger-button" type="button" onClick={() => onDelete(todo.id)}>
-					Delete
-				</button>
+				<div className="flex-right">
+					<button className="danger-button" type="button" onClick={() => onDelete(todo.id)}>
+						Delete
+					</button>
+				</div>
 			</div>
 		</article>
 	)

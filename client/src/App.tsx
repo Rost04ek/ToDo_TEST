@@ -31,17 +31,8 @@ function App() {
           <ToDoBoard onSessionExpired={handleLogout} />
         </>
       ) : (
-        <section className="auth-layout">
-          <div className="hero-copy">
-            <p className="eyebrow">Simple, fast, visible</p>
-            <h1>Manage your tasks without noise.</h1>
-            <p>
-              JWT auth, task CRUD, and status filters are already wired to the backend.
-              Sign in or create an account to start.
-            </p>
-          </div>
-
-          <div className="auth-switcher">
+        <section className="auth-layout auth-center">
+          <div className="auth-switcher card">
             <div className="auth-tabs">
               <button
                 className={authView === 'login' ? 'tab-button tab-button--active' : 'tab-button'}
